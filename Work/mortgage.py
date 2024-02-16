@@ -1,7 +1,7 @@
 # mortgage.py
 #
 # Exercise 1.7
-
+# Mortgage calculator
 principal = 500_000.0
 rate = 0.05
 payment = 2684.11
