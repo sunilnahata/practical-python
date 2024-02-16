@@ -28,7 +28,7 @@ while principal > 0:
     if payment > principal:
         payment = principal * (1+rate/12)
 
-    print(month, round(total_paid,2), round(principal, 2))
+    print(f"Month #{month}, Total payment made: {round(total_paid,2)}, Balance remaining: {round(principal, 2)}")
 
 
 print('Total paid', round(total_paid, 2))
