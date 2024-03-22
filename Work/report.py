@@ -7,15 +7,11 @@ import csv
 def read_portfolio(filename):
     portfolio = []
     with open(filename) as f:
-        rows = csv.DictReader(f)
-#        header = next(rows) # Use this when implementing the csv.reader
+        rows = csv.reader(f)
+        header = next(rows)
         for row in rows:
-#            record = dict(zip(header, row))
-            record = {
-                     "name": row["name"], 
-                     "shares": int(row["shares"]),
-                     "price": float(row["price"])
-                      }
+            record = dict(zip(header, row))
+# Remove the following section when zipping records 
 #            stock = {
 #                    "name": row[0], 
 #                    "shares": int(row[1]),     
@@ -50,8 +46,8 @@ def make_report(portfolio, price):
     return rows
 
 
-#portfolio = read_portfolio('Data/portfoliodate.csv')
-portfolio = read_portfolio(input("Enter the filename: ")) 
+portfolio = read_portfolio('Data/portfolio.csv')
+#portfolio = read_portfolio(input("Enter the filename: ")) 
 price = read_prices('Data/prices.csv')
 
 
