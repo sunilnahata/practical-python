@@ -2,22 +2,26 @@
 #
 # Exercise 1.27
 
+import csv
 import sys 
 
 # file = "Data/portfolio.csv"
 
 def portfolio_cost(file):
     with open(file, 'rt') as f:
-        headers = next(f)
+        rows = csv.reader(f)
+        headers = next(rows)
         cost = 0
-        for line in f:
-            data = line.split(',')
+        for row_num, row in enumerate(rows, start = 1):
+            record = dict(zip(headers, row))
+#            data = row.split(',')
             try:
-                num_shares=int(data[1])
+                num_shares=int(record["shares"])
             except ValueError:
-                print(f"Missing Value in {line}", end='')
-            price_shares=float(data[2])
-            cost = cost + (num_shares * price_shares)
+                print(f"Row {row_num}: Bad row: {row}")
+#                print(f"Missing Value in {line}", end='')
+            price_shares=float(record["price"])
+            cost += (num_shares * price_shares)
     return cost            
 
 if len(sys.argv) == 2:
