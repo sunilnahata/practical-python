@@ -11,13 +11,12 @@ def read_portfolio(filename):
         header = next(rows)
         for row in rows:
             record = dict(zip(header, row))
-# Remove the following section when zipping records 
-#            stock = {
-#                    "name": row[0], 
-#                    "shares": int(row[1]),     
-#                    "price": float(row[2]),
-#                    }
-            portfolio.append(record)
+            stock = {
+                    "name": record["name"], 
+                    "shares": int(record["shares"]),     
+                    "price": float(record["price"]),
+                    }
+            portfolio.append(stock)
             
     return portfolio
 
@@ -35,10 +34,10 @@ def read_prices(filename):
     
     return prices
 
-def make_report(portfolio, price):
+def make_report(portfolio, prices):
     rows = []
     for stock in portfolio:
-        curr_price = price[stock["name"]]
+        curr_price = prices[stock["name"]]
         change = curr_price - float(stock["price"])
         summary = (stock["name"], int(stock["shares"]), curr_price, change)
         rows.append(summary)
@@ -46,12 +45,12 @@ def make_report(portfolio, price):
     return rows
 
 
-portfolio = read_portfolio('Data/portfolio.csv')
+portfolio = read_portfolio('Data/portfoliodate.csv')
 #portfolio = read_portfolio(input("Enter the filename: ")) 
-price = read_prices('Data/prices.csv')
+prices = read_prices('Data/prices.csv')
 
 
-report = make_report(portfolio, price)
+report = make_report(portfolio, prices)
 header = ('Name', 'Shares', 'Price', 'Change')
 print("%10s %10s %10s %10s" %header)
 print(("-" * 10 + " ") * len(header))
