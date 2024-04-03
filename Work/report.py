@@ -45,17 +45,12 @@ def make_report(portfolio, prices):
     return rows
 
 
-portfolio = read_portfolio('Data/portfoliodate.csv')
-#portfolio = read_portfolio(input("Enter the filename: ")) 
-prices = read_prices('Data/prices.csv')
-
-
-report = make_report(portfolio, prices)
-header = ('Name', 'Shares', 'Price', 'Change')
-print("%10s %10s %10s %10s" %header)
-print(("-" * 10 + " ") * len(header))
-for name, shares, price, change in report:
-    print(f"{name:>10s} {shares:>10d} {f'${price:.2f}':>10} {change:>10.2f}")
+def print_report(report):
+    header = ('Name', 'Shares', 'Price', 'Change')
+    print("%10s %10s %10s %10s" %header)
+    print(("-" * 10 + " ") * len(header))
+    for name, shares, price, change in report:
+        print(f"{name:>10s} {shares:>10d} {f'${price:.2f}':>10} {change:>10.2f}")
 
 ##cost = 0
 #for share in portfolio:
@@ -69,3 +64,13 @@ for name, shares, price, change in report:
 #print(f"Current value: {curr_val}")
 #print(f"Profit: {curr_val - cost}")
 #
+def main():
+    portfolio = read_portfolio('Data/portfoliodate.csv')
+    #portfolio = read_portfolio(input("Enter the filename: ")) 
+    prices = read_prices('Data/prices.csv')
+    report = make_report(portfolio, prices)
+    print_report(report)
+
+if __name__ == "__main__":
+    main()
+
