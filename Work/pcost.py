@@ -7,14 +7,45 @@ import sys
 
 # file = "Data/portfolio.csv"
 
-def portfolio_cost(file):
+def portfolio_cost(filename):
     portfolio = report.read_portfolio(filename)
-    return sum([s['shares']*s['price'] for s in portfolio])
+    return sum([s['shares'] * s['price'] for s in portfolio])
 
-if len(sys.argv) == 2:
-    filename = sys.argv[1]
-else:
-    filename = input("Enter a filename: ") 
+def main(args):
+    if len(args) != 2:
+        raise SystemExit('Usage: %s portfoliofile' % args[0])
+    filename = args[1]
+    print('Total cost:', portfolio_cost(filename))
 
-cost = portfolio_cost(filename)
-print(f"Total cost: {cost}")
+if __name__ == '__main__':
+    main(sys.argv)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
