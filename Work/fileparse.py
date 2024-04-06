@@ -3,11 +3,17 @@
 # Exercise 3.3
 
 import csv
+import pathlib
 
-def parse_csv(lines, select=None, types=None, has_headers=True, delimiter=",", silence_errors=False):
+def parse_csv(thing_to_read, select=None, types=None, has_headers=True, delimiter=",", silence_errors=False):
     if select and not has_headers:
         raise RuntimeError("Select requires column headers")
         
+    if isinstance(thing_to_read, (str, pathlib.Path)):
+        with open(thing_to_read) as inf:
+            lines = inf.readlines()
+    else:
+        lines = thing_to_read
     rows = csv.reader(lines, delimiter=delimiter)
     header = next(rows) if has_headers else []
     if select:
