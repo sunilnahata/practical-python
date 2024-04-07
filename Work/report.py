@@ -3,10 +3,14 @@
 # Exercise 2.4
 
 import fileparse
+from stock import Stock
 
 def read_portfolio(filename):
     with open(filename) as line:
-        return fileparse.parse_csv(line, select=['name', 'shares', 'price'], types=[str, int, float]) 
+        portfolio_dicts = fileparse.parse_csv(line, select=['name', 'shares', 'price'], types=[str, int, float])
+    
+    portfolio = [Stock(d['name'], d['shares'], d['price']) for d in portfolio_dicts]
+    return portfolio
 
 def read_prices(filename):
     with open(filename) as lines:
@@ -15,9 +19,9 @@ def read_prices(filename):
 def make_report(portfolio, prices):
     rows = []
     for stock in portfolio:
-        curr_price = prices[stock["name"]]
-        change = curr_price - float(stock["price"])
-        summary = (stock["name"], int(stock["shares"]), curr_price, change)
+        curr_price = prices[stock.name]
+        change = curr_price - stock.price
+        summary = (stock.name, stock.shares, curr_price, change)
         rows.append(summary)
 
     return rows
@@ -41,7 +45,7 @@ def portfolio_report(portfoliofile, pricefile):
 
 def main(args):
     if len(args) != 3:
-        raise SystemExit("Usage: %s portfile pricefile" % args[0])
+        raise SystemExit("Usage: %s portfoliofile pricefile" % args[0])
     portfolio_report(args[1], args[2])
 
 if __name__ == "__main__":
